@@ -1,0 +1,185 @@
+/* Holy Flirtation — shared design tokens */
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Caveat:wght@400;500;600&display=swap');
+
+:root {
+  /* Cream paper */
+  --cream-50: #FBF8EE;
+  --cream-100: #F4EFE0;   /* primary background */
+  --cream-200: #ECE5D2;
+  --cream-300: #E0D7BF;
+
+  /* Ink */
+  --ink-900: #14110C;
+  --ink-700: #2A2620;
+  --ink-500: #5C564A;
+  --ink-400: #847D6E;
+
+  /* Warm gradient stops (the sunset) */
+  --sun-orange: #FF7A2E;
+  --sun-coral:  #FF7F6A;
+  --sun-pink:   #FF4F8B;
+  --sun-magenta:#E04A9E;
+
+  /* Dove accents */
+  --dove-blue:  #BCD4DC;
+  --dove-blue-deep: #6E96A1;
+  --dove-gold:  #E8B547;
+
+  /* Spirit gradient (canonical) */
+  --gradient-spirit: linear-gradient(95deg, #FF7A2E 0%, #FF7F6A 35%, #FF4F8B 70%, #E04A9E 100%);
+  --gradient-spirit-soft: linear-gradient(95deg, #FFB78A 0%, #FFB6A8 40%, #FFA1C2 70%, #F0A4C9 100%);
+
+  /* Type */
+  --font-serif: 'Crimson Text', 'EB Garamond', Georgia, serif;
+  --font-script: 'Caveat', 'Brush Script MT', cursive;
+
+  /* Radius / shadow */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 22px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-serif);
+  background: var(--cream-100);
+  color: var(--ink-900);
+  font-size: 19px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+
+/* Type system */
+.t-display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(56px, 8.5vw, 132px);
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.t-h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(44px, 5.6vw, 84px);
+  line-height: 1.0;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+.t-h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+.t-h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+.t-eyebrow {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--ink-500);
+}
+.t-body {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+.t-lede {
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 1.6vw, 24px);
+  line-height: 1.5;
+  color: var(--ink-700);
+}
+.t-script {
+  font-family: var(--font-script);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+.t-caps {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--gradient-spirit);
+  color: #fff;
+  box-shadow: 0 8px 24px -10px rgba(255, 79, 139, 0.55);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -10px rgba(255, 79, 139, 0.7); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-900);
+  border: 1px solid var(--ink-900);
+}
+.btn-ghost:hover { background: var(--ink-900); color: var(--cream-100); }
+.btn-sm { padding: 9px 18px; font-size: 16px; }
+
+/* Helpers */
+.gradient-text {
+  background: var(--gradient-spirit);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-band {
+  background: var(--gradient-spirit);
+}
+.divider-rule {
+  height: 1px;
+  background: var(--ink-900);
+  width: 100%;
+  border: 0;
+}
+.italic { font-style: italic; }
+
+/* Logo wordmark — script style */
+.wordmark {
+  font-family: var(--font-script);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: 0.005em;
+  color: var(--ink-900);
+  line-height: 1;
+}
+
+/* Page container */
+.container {
+  width: min(1280px, 92vw);
+  margin: 0 auto;
+}

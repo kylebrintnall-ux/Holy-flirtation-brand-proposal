@@ -1,0 +1,3218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Holy Flirtation — Brand &amp; design system proposal</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  :root {
+    --slide-w: 1920px;
+    --slide-h: 1080px;
+    --pad: 96px;
+  }
+  html, body { background: #0b0a08; }
+  deck-stage { background: #0b0a08; }
+  /* Every slide is a paper-cream canvas with consistent padding */
+  .slide {
+    width: var(--slide-w);
+    height: var(--slide-h);
+    background: var(--cream-100);
+    color: var(--ink-900);
+    position: relative;
+    overflow: hidden;
+    padding: var(--pad);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide.dark { background: var(--ink-900); color: var(--cream-100); }
+  .slide.bleed { padding: 0; }
+
+  /* Reusable slide chrome */
+  .slide-meta {
+    position: absolute;
+    bottom: 40px;
+    left: var(--pad);
+    right: var(--pad);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-500);
+    letter-spacing: 0.02em;
+  }
+  .slide.dark .slide-meta { color: rgba(244,239,224,0.5); }
+  .slide-meta .wm {
+    font-family: var(--font-script);
+    font-style: normal;
+    font-size: 26px;
+    color: var(--ink-900);
+  }
+  .slide.dark .slide-meta .wm { color: var(--cream-100); }
+
+  .eyebrow {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--ink-500);
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 36px; height: 1px; background: currentColor;
+    display: inline-block;
+  }
+  .slide.dark .eyebrow { color: rgba(244,239,224,0.65); }
+
+  .h-display {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 156px;
+    line-height: 0.94;
+    letter-spacing: -0.018em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .h-1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 108px;
+    line-height: 0.96;
+    letter-spacing: -0.014em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .h-2 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .h-3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .lede {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    line-height: 1.45;
+    color: var(--ink-700);
+    max-width: 32ch;
+    margin: 0;
+  }
+  .slide.dark .lede { color: rgba(244,239,224,0.78); }
+  .body {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-700);
+  }
+  .slide.dark .body { color: rgba(244,239,224,0.78); }
+  .grad-text {
+    background: var(--gradient-spirit);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  em { font-style: italic; }
+
+  /* Banner highlight (skewed gradient behind text) */
+  .banner {
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+    padding: 0 0.12em;
+  }
+  .banner::before {
+    content: "";
+    position: absolute;
+    inset: 0.18em -0.14em 0.18em -0.14em;
+    background: var(--gradient-spirit);
+    z-index: -1;
+    transform: skew(-2deg);
+  }
+
+  /* === Slide 01 — cover === */
+  .s-cover { padding: 0; }
+  .s-cover .cover-grid {
+    position: absolute; inset: 0;
+    display: grid; grid-template-columns: 1.1fr 1fr;
+  }
+  .s-cover .cover-left {
+    padding: 110px var(--pad);
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .s-cover .cover-mark {
+    font-family: var(--font-script);
+    font-size: 64px; line-height: 1; color: var(--ink-900);
+  }
+  .s-cover .cover-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 132px;
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+    margin: 0 0 36px;
+  }
+  .s-cover .cover-title em { font-style: italic; }
+  .s-cover .cover-tag {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 30px;
+    color: var(--ink-700);
+    max-width: 30ch;
+  }
+  .s-cover .cover-foot {
+    display: flex; justify-content: space-between; align-items: end;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-500);
+  }
+  .s-cover .cover-foot .vol {
+    font-style: normal;
+    font-size: 140px; line-height: 0.85;
+    font-weight: 600;
+    background: var(--gradient-spirit);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .s-cover .cover-right {
+    position: relative;
+    background: var(--cream-50);
+    overflow: hidden;
+  }
+  .s-cover .cover-right::before {
+    content: "";
+    position: absolute;
+    inset: 22% -8% 12% 10%;
+    background: var(--gradient-spirit);
+    transform: skew(-3deg) rotate(-2deg);
+    border-radius: 4px;
+    opacity: 0.95;
+  }
+  .s-cover .cover-right img {
+    position: absolute;
+    inset: 4% -6% -6% -6%;
+    width: 112%; height: 102%;
+    object-fit: contain;
+    object-position: center;
+    mix-blend-mode: multiply;
+  }
+  .s-cover .cover-seal {
+    position: absolute;
+    left: 28px; bottom: 80px;
+    width: 156px; height: 156px;
+    border-radius: 50%;
+    background: var(--cream-50);
+    border: 1px solid var(--ink-900);
+    display: grid; place-items: center;
+    text-align: center;
+    transform: rotate(-9deg);
+    z-index: 5;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-900);
+    line-height: 1.3;
+  }
+  .s-cover .cover-seal strong {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    margin: 4px 0 2px;
+  }
+
+  /* === Slide 02 — TOC === */
+  .toc-grid {
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 80px;
+  }
+  .toc-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-top: 1px solid var(--ink-900);
+    align-items: baseline;
+  }
+  .toc-row:last-child { border-bottom: 1px solid var(--ink-900); }
+  .toc-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink-500);
+  }
+  .toc-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 36px;
+    letter-spacing: -0.005em;
+  }
+  .toc-title em { font-style: italic; color: var(--sun-pink); }
+  .toc-sub {
+    grid-column: 2;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ink-500);
+    font-size: 19px;
+    margin-top: 4px;
+  }
+
+  /* === Slide 03 — the brief === */
+  .brief-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .brief-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 36px 36px 32px;
+    background: var(--cream-50);
+  }
+  .brief-card .label {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ink-500);
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .brief-card p {
+    margin: 0 0 18px;
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--ink-900);
+  }
+  .brief-card p:last-child { margin: 0; }
+
+  /* === Slide 04 — promise === */
+  .s-promise {
+    background: var(--ink-900);
+    color: var(--cream-100);
+    position: relative;
+    overflow: hidden;
+  }
+  .s-promise::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 460px at 78% 30%, rgba(255, 79, 139, 0.22), transparent 60%),
+      radial-gradient(700px 420px at 12% 80%, rgba(255, 122, 46, 0.20), transparent 60%);
+    pointer-events: none;
+  }
+  .s-promise .stack {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; gap: 36px;
+    flex: 1; justify-content: center;
+    padding-bottom: 60px;
+  }
+  .s-promise .h-display { font-size: 152px; }
+  .s-promise .pillar-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 20px;
+  }
+  .s-promise .pillar {
+    border-top: 1px solid rgba(244,239,224,0.25);
+    padding-top: 22px;
+  }
+  .s-promise .pillar .num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(244,239,224,0.55);
+    margin-bottom: 10px;
+  }
+  .s-promise .pillar h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 34px;
+    margin: 0 0 10px;
+    line-height: 1.05;
+  }
+  .s-promise .pillar h4 em { font-style: italic; }
+  .s-promise .pillar p {
+    font-size: 20px; line-height: 1.5;
+    color: rgba(244,239,224,0.78);
+    margin: 0;
+    max-width: 36ch;
+  }
+
+  /* === Slide 05 — voice & tone === */
+  .voice-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .voice-col h4 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-500);
+    margin: 0 0 18px;
+    letter-spacing: 0.03em;
+  }
+  .voice-do, .voice-dont {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    background: var(--cream-50);
+    padding: 28px 32px;
+    margin-bottom: 14px;
+    font-size: 24px;
+    line-height: 1.4;
+    position: relative;
+  }
+  .voice-do strong, .voice-dont strong {
+    font-family: var(--font-script);
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--sun-pink);
+    margin-right: 6px;
+    font-style: normal;
+  }
+  .voice-dont {
+    background: transparent;
+    color: var(--ink-500);
+    text-decoration: line-through;
+    text-decoration-color: rgba(20,17,12,0.3);
+  }
+  .voice-attrs {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    margin-top: 28px;
+  }
+  .voice-attrs span {
+    border: 1px solid var(--ink-900);
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-900);
+    background: var(--cream-50);
+  }
+  .voice-attrs span.hot {
+    background: var(--gradient-spirit);
+    color: #fff; border-color: transparent;
+  }
+
+  /* === Slide 06 — wordmark === */
+  .s-mark { background: var(--cream-50); }
+  .mark-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: stretch;
+    flex: 1;
+  }
+  .mark-hero {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-lg);
+    background: var(--cream-100);
+    display: grid; place-items: center;
+    position: relative;
+  }
+  .mark-hero .big {
+    font-family: var(--font-script);
+    font-weight: 500;
+    font-size: 220px;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    color: var(--ink-900);
+  }
+  .mark-hero .corner {
+    position: absolute;
+    top: 24px; left: 28px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-500);
+  }
+  .mark-hero .corner.r {
+    left: auto; right: 28px;
+  }
+  .mark-side {
+    display: grid; grid-template-rows: 1fr 1fr; gap: 22px;
+  }
+  .mark-tile {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 28px 32px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    background: var(--cream-100);
+    position: relative;
+  }
+  .mark-tile.dark { background: var(--ink-900); color: var(--cream-100); border-color: var(--ink-900); }
+  .mark-tile.grad { background: var(--gradient-spirit); color: #fff; border-color: transparent; }
+  .mark-tile .label {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    opacity: 0.7;
+  }
+  .mark-tile .mini {
+    font-family: var(--font-script);
+    font-weight: 500;
+    font-size: 84px;
+    line-height: 1;
+  }
+  .mark-tile.dark .mini, .mark-tile.grad .mini { color: inherit; }
+
+  /* === Slide 07 — type === */
+  .type-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 56px;
+    flex: 1;
+  }
+  .type-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 36px 40px;
+    background: var(--cream-50);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .type-card .meta {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-500);
+  }
+  .type-card .name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 1;
+    margin: 0;
+  }
+  .type-card .name.script {
+    font-family: var(--font-script);
+    font-weight: 500;
+    font-size: 84px;
+  }
+  .type-card .glyph {
+    font-family: var(--font-serif);
+    font-size: 200px; line-height: 0.9;
+    margin: 0;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: var(--ink-900);
+  }
+  .type-card .glyph.script {
+    font-family: var(--font-script);
+    font-weight: 500;
+    font-size: 240px;
+  }
+  .type-card .specimen {
+    font-family: var(--font-serif);
+    font-size: 22px; color: var(--ink-700);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .type-card .scale {
+    display: grid; gap: 8px;
+    border-top: 1px solid rgba(20,17,12,0.18);
+    padding-top: 16px;
+  }
+  .type-card .scale-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px;
+    font-family: var(--font-serif);
+    color: var(--ink-900);
+  }
+  .type-card .scale-row .lbl {
+    font-style: italic; font-size: 16px; color: var(--ink-500); flex-shrink: 0;
+  }
+  .type-card .scale-row .ex { font-weight: 600; line-height: 1; }
+
+  /* === Slide 08 — color === */
+  .s-color { background: var(--cream-100); }
+  .color-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 18px;
+    flex: 1;
+  }
+  .swatch {
+    border-radius: var(--r-md);
+    border: 1px solid var(--ink-900);
+    padding: 24px 24px 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    color: var(--ink-900);
+    position: relative;
+    min-height: 100%;
+  }
+  .swatch.dark { color: var(--cream-100); }
+  .swatch .hex {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 20px;
+    opacity: 0.75;
+    margin-top: auto;
+  }
+  .swatch .nm {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1.05;
+  }
+  .swatch .role {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    opacity: 0.65;
+    margin-top: 4px;
+  }
+  .col-cream-50  { background: #FBF8EE; grid-column: span 3; }
+  .col-cream-100 { background: #F4EFE0; grid-column: span 3; }
+  .col-cream-200 { background: #ECE5D2; grid-column: span 3; }
+  .col-cream-300 { background: #E0D7BF; grid-column: span 3; }
+  .col-ink-900   { background: #14110C; grid-column: span 3; }
+  .col-ink-700   { background: #2A2620; grid-column: span 3; }
+  .col-ink-500   { background: #5C564A; grid-column: span 3; }
+  .col-ink-400   { background: #847D6E; grid-column: span 3; }
+  .col-orange    { background: #FF7A2E; grid-column: span 3; }
+  .col-coral     { background: #FF7F6A; grid-column: span 3; }
+  .col-pink      { background: #FF4F8B; grid-column: span 3; }
+  .col-magenta   { background: #E04A9E; grid-column: span 3; }
+
+  /* === Slide 09 — gradient hero === */
+  .s-grad {
+    background: var(--gradient-spirit);
+    color: var(--ink-900);
+    position: relative;
+    overflow: hidden;
+  }
+  .s-grad .gtitle {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 168px;
+    line-height: 0.94;
+    letter-spacing: -0.018em;
+    margin: 0 0 32px;
+    color: var(--cream-50);
+    text-wrap: balance;
+  }
+  .s-grad .gtitle em {
+    font-style: italic;
+    color: var(--ink-900);
+  }
+  .s-grad .gtag {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 30px;
+    color: rgba(20,17,12,0.78);
+    max-width: 38ch;
+    margin: 0;
+  }
+  .s-grad .stops {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    margin-top: 56px;
+  }
+  .s-grad .stop {
+    background: rgba(244,239,224,0.18);
+    border: 1px solid rgba(20,17,12,0.25);
+    border-radius: var(--r-md);
+    padding: 18px 22px;
+    backdrop-filter: blur(6px);
+  }
+  .s-grad .stop .nm { font-family: var(--font-serif); font-weight: 600; font-size: 22px; }
+  .s-grad .stop .hx { font-family: var(--font-serif); font-style: italic; font-size: 17px; opacity: 0.7; margin-top: 4px; }
+  .s-grad .dove-up {
+    position: absolute;
+    right: -60px; top: -80px;
+    width: 720px;
+    transform: rotate(-8deg);
+    mix-blend-mode: screen;
+    opacity: 0.42;
+    pointer-events: none;
+  }
+
+  /* === Slide 10 — patron (the dove) === */
+  .s-dove { background: var(--cream-50); }
+  .dove-grid {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 40px;
+    flex: 1;
+    min-height: 0;
+    padding-bottom: 50px;
+  }
+  .dove-grid > * { min-height: 0; }
+  .dove-hero {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-lg);
+    background: var(--cream-100);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    align-self: center;
+    width: 100%;
+    max-height: 100%;
+    justify-self: center;
+  }
+  .dove-hero img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    mix-blend-mode: multiply;
+  }
+  .dove-hero .label {
+    position: absolute;
+    bottom: 18px; left: 22px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-500);
+    background: rgba(244,239,224,0.85);
+    padding: 4px 10px;
+    border-radius: 4px;
+    z-index: 2;
+  }
+  .dove-right {
+    display: flex; flex-direction: column;
+    gap: 22px;
+    min-height: 0;
+    align-self: start;
+    width: 100%;
+  }
+  .dove-grid-r {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+  }
+  .dove-grid-r .tile {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    background: var(--cream-100);
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+  .dove-grid-r .tile img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    mix-blend-mode: multiply;
+  }
+  .dove-grid-r .tile .cap {
+    position: absolute;
+    bottom: 10px; left: 12px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-700);
+    background: rgba(244,239,224,0.85);
+    padding: 3px 8px;
+    border-radius: 4px;
+    z-index: 2;
+  }
+  .dove-text {
+    margin-top: 4px;
+  }
+  .dove-text p {
+    font-size: 24px; line-height: 1.5; color: var(--ink-700);
+    max-width: 36ch; margin: 0 0 14px;
+  }
+  .dove-text p em { font-style: italic; color: var(--ink-900); }
+
+  /* === Slide 11 — components === */
+  .comp-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(220px, auto);
+    gap: 22px;
+    flex: 1;
+  }
+  .comp-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    background: var(--cream-50);
+    padding: 28px 32px;
+    position: relative;
+    display: flex; flex-direction: column; gap: 18px;
+    overflow: hidden;
+  }
+  .comp-card .lab {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-500);
+  }
+  .comp-buttons { grid-column: span 6; grid-row: span 1; }
+  .comp-buttons .row {
+    display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+  }
+  .comp-buttons .btn { padding: 16px 30px; font-size: 22px; }
+  .comp-buttons .btn-sm { padding: 11px 22px; font-size: 18px; }
+
+  .comp-banner { grid-column: span 6; grid-row: span 1; }
+  .comp-banner .demo {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .comp-tag { grid-column: span 4; grid-row: span 1; }
+  .comp-tag .tag-nametag {
+    background: var(--cream-100);
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 22px 26px;
+    width: 100%;
+    position: relative;
+  }
+  .comp-tag .hello {
+    font-family: var(--font-script);
+    font-size: 26px;
+    color: var(--sun-pink);
+    margin-bottom: 6px;
+  }
+  .comp-tag .name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 40px;
+    letter-spacing: -0.005em;
+    line-height: 1;
+  }
+  .comp-tag .parish {
+    font-style: italic;
+    color: var(--ink-500);
+    font-size: 18px;
+    margin-top: 6px;
+  }
+  .comp-tag .note {
+    font-family: var(--font-script);
+    color: var(--ink-900);
+    font-size: 22px;
+    margin-top: 10px;
+    line-height: 1.1;
+  }
+
+  .comp-card-card { grid-column: span 4; grid-row: span 1; }
+  .comp-card-card .seal {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-900);
+    background: var(--cream-100);
+    display: grid; place-items: center;
+    text-align: center;
+    transform: rotate(-8deg);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-900);
+    line-height: 1.2;
+  }
+  .comp-card-card .seal strong {
+    display: block; font-style: normal; font-weight: 600;
+    font-size: 24px; margin: 2px 0;
+  }
+  .comp-card-card .row { display: flex; gap: 24px; align-items: center; }
+
+  .comp-eyebrow { grid-column: span 4; grid-row: span 1; }
+  .comp-eyebrow .ex {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-500);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .comp-eyebrow .ex::before {
+    content: "";
+    width: 36px; height: 1px; background: currentColor;
+    display: inline-block;
+  }
+  .comp-eyebrow .caps {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+  .comp-eyebrow .marquee-mini {
+    background: var(--ink-900);
+    color: var(--cream-100);
+    padding: 12px 16px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    border-radius: var(--r-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .comp-eyebrow .marquee-mini .crux { color: var(--sun-pink); margin: 0 8px; }
+
+  /* === Slide 12 — applications mockup === */
+  .s-apps { background: var(--cream-100); }
+  .apps-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr 0.9fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 22px;
+    flex: 1;
+  }
+  .app-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    position: relative;
+    background: var(--cream-50);
+    display: flex; flex-direction: column;
+  }
+  .app-card .cap {
+    position: absolute;
+    bottom: 14px; left: 18px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-500);
+    z-index: 5;
+  }
+  .app-card.dark .cap { color: rgba(244,239,224,0.65); }
+
+  /* poster */
+  .app-poster {
+    grid-row: span 2;
+    background: var(--ink-900);
+    color: var(--cream-100);
+    padding: 38px;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+  .app-poster::before {
+    content: "";
+    position: absolute;
+    inset: 38% -10% 22% -10%;
+    background: var(--gradient-spirit);
+    transform: skew(-3deg) rotate(-2deg);
+  }
+  .app-poster .top {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(244,239,224,0.65);
+    position: relative; z-index: 2;
+  }
+  .app-poster h3 {
+    position: relative; z-index: 2;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 78px; line-height: 0.94;
+    margin: 24px 0 0;
+    letter-spacing: -0.012em;
+  }
+  .app-poster h3 em { font-style: italic; }
+  .app-poster .feb {
+    position: relative; z-index: 2;
+    margin-top: auto;
+    display: grid; grid-template-columns: auto 1fr; gap: 18px;
+    align-items: end;
+  }
+  .app-poster .feb .day {
+    font-family: var(--font-serif);
+    font-weight: 600; font-size: 168px; line-height: 0.85;
+    letter-spacing: -0.02em;
+  }
+  .app-poster .feb .meta {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(244,239,224,0.85);
+    line-height: 1.35;
+    padding-bottom: 12px;
+  }
+  .app-poster .feb .meta strong {
+    display: block; font-style: normal;
+    font-size: 22px; font-weight: 600;
+    color: var(--cream-50);
+    margin-bottom: 4px;
+  }
+  .app-poster img.dove {
+    position: absolute;
+    top: 32px; right: -40px;
+    width: 280px;
+    mix-blend-mode: screen;
+    opacity: 0.85;
+    z-index: 1;
+  }
+
+  /* IG square */
+  .app-ig {
+    background: var(--cream-50);
+    padding: 30px 32px;
+    aspect-ratio: 1/1;
+    position: relative; overflow: hidden;
+  }
+  .app-ig .top {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--ink-500);
+  }
+  .app-ig .top .dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gradient-spirit);
+  }
+  .app-ig h4 {
+    margin: 26px 0 0;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 50px; line-height: 0.96;
+    letter-spacing: -0.01em;
+  }
+  .app-ig h4 em {
+    font-style: italic;
+    background: var(--gradient-spirit);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .app-ig .sig {
+    margin-top: auto;
+    font-family: var(--font-script);
+    color: var(--ink-900);
+    font-size: 30px;
+    align-self: flex-start;
+  }
+  .app-ig .l {
+    margin-top: 18px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-500);
+  }
+
+  /* card stack */
+  .app-card-stack {
+    background: var(--cream-50);
+    padding: 28px;
+    position: relative; overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .match-card {
+    width: 78%; aspect-ratio: 0.66/1;
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    background: var(--cream-100);
+    padding: 18px;
+    transform: rotate(-3deg);
+    position: relative;
+    box-shadow: 8px 12px 0 -2px rgba(20,17,12,0.08);
+  }
+  .match-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px dashed rgba(20,17,12,0.3);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  .match-card .h {
+    font-family: var(--font-script);
+    color: var(--sun-pink);
+    font-size: 26px;
+    margin: 0;
+  }
+  .match-card .t {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 22px;
+    margin: 4px 0 14px;
+    line-height: 1.05;
+  }
+  .match-card .lines {
+    display: grid; gap: 8px;
+  }
+  .match-card .ln {
+    height: 16px;
+    border-bottom: 1px solid rgba(20,17,12,0.25);
+    font-family: var(--font-script);
+    font-size: 18px;
+    line-height: 1;
+    color: var(--ink-700);
+  }
+  .match-card .lab {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-500);
+    margin-top: 2px;
+  }
+  .match-card .stamp {
+    position: absolute;
+    right: 14px; bottom: 14px;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--gradient-spirit);
+    display: grid; place-items: center;
+    color: #fff;
+    font-family: var(--font-script);
+    font-size: 22px;
+    transform: rotate(8deg);
+  }
+
+  /* nav site mock */
+  .app-site {
+    background: var(--cream-100);
+    grid-column: span 2;
+    padding: 0;
+    position: relative; overflow: hidden;
+  }
+  .app-site .browser {
+    height: 38px; border-bottom: 1px solid var(--ink-900);
+    display: flex; align-items: center; gap: 6px; padding: 0 16px;
+    background: var(--cream-50);
+  }
+  .app-site .browser .b {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: rgba(20,17,12,0.15);
+  }
+  .app-site .body-wrap { padding: 30px 40px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: end; flex: 1; }
+  .app-site .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--ink-500);
+    grid-column: span 2;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(20,17,12,0.15);
+    margin-bottom: 8px;
+  }
+  .app-site .nav .wm {
+    font-family: var(--font-script); font-size: 28px; color: var(--ink-900);
+  }
+  .app-site .nav .l { display: flex; gap: 20px; font-style: italic; }
+  .app-site h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 56px; line-height: 0.96;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .app-site h3 em { font-style: italic; }
+  .app-site .right-art {
+    position: relative;
+    height: 220px;
+  }
+  .app-site .right-art img {
+    position: absolute; right: -10px; bottom: -10px;
+    width: 240px; mix-blend-mode: multiply;
+  }
+
+  /* === Slide 13 — closer === */
+  .s-closer {
+    background: var(--cream-100);
+    text-align: center;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+  .s-closer .closer-stack {
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
+  }
+  .s-closer h1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 220px;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: 16ch;
+  }
+  .s-closer h1 em {
+    font-style: italic;
+    background: var(--gradient-spirit);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .s-closer p {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 30px;
+    color: var(--ink-700);
+    margin: 0;
+    max-width: 50ch;
+  }
+  .s-closer .float {
+    position: absolute;
+    width: 320px;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .s-closer .float.l { left: 4%; top: 14%; transform: rotate(-12deg); width: 360px; }
+  .s-closer .float.r { right: 4%; bottom: 6%; transform: rotate(8deg) scaleX(-1); width: 380px; }
+
+  /* === Slide 13 — Flirtation Nation (chapter network) === */
+  .s-nation { background: var(--cream-100); }
+  .nation-grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap: 50px;
+    flex: 1;
+    min-height: 0;
+  }
+  .nation-map {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-lg);
+    background: var(--cream-50);
+    padding: 26px 28px;
+    position: relative;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .nation-map .map-cap {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-500);
+    margin-bottom: 6px;
+  }
+  .nation-map .map-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.05;
+    margin: 0 0 18px;
+  }
+  .nation-map .map-title em { font-style: italic; }
+  .nation-map .usa-svg {
+    flex: 1;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+  .nation-map .map-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+    border-top: 1px solid rgba(20,17,12,0.18);
+    padding-top: 14px;
+  }
+  .nation-map .map-stats .stat .n {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1;
+  }
+  .nation-map .map-stats .stat .l {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-500);
+    margin-top: 4px;
+  }
+
+  .nation-side {
+    display: flex; flex-direction: column;
+    gap: 18px; min-height: 0;
+  }
+  .chapter-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .chapter-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 18px 22px;
+    background: var(--cream-50);
+    position: relative;
+    display: flex; flex-direction: column; gap: 6px;
+    overflow: hidden;
+  }
+  .chapter-card.hq {
+    background: var(--ink-900);
+    color: var(--cream-50);
+    border-color: var(--ink-900);
+  }
+  .chapter-card .ch-meta {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-500);
+    display: flex; justify-content: space-between;
+  }
+  .chapter-card.hq .ch-meta { color: rgba(244,239,224,0.6); }
+  .chapter-card .ch-city {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1.0;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .chapter-card .ch-parish {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-500);
+  }
+  .chapter-card.hq .ch-parish { color: rgba(244,239,224,0.65); }
+  .chapter-card .ch-hq-tag {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-family: var(--font-script);
+    font-size: 22px;
+    color: var(--cream-50);
+  }
+  .chapter-card.hq::before {
+    content: "";
+    position: absolute;
+    inset: -10% -20% auto auto;
+    width: 140px; height: 140px;
+    background: var(--gradient-spirit);
+    transform: skew(-3deg);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .nation-kit {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 22px 26px;
+    background: var(--cream-50);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;
+  }
+  .nation-kit .lab {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-500);
+    grid-column: 1 / -1;
+    margin-bottom: -6px;
+  }
+  .nation-kit .item {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink-700);
+  }
+  .nation-kit .item strong {
+    display: block;
+    font-weight: 600;
+    color: var(--ink-900);
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  /* === Slide 14 — System at scale === */
+  .s-scale { background: var(--cream-50); }
+  .scale-grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }
+  .scale-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    background: var(--cream-100);
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .scale-card .sc-cap {
+    position: absolute;
+    bottom: 12px; left: 18px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-500);
+    z-index: 5;
+  }
+  .scale-card.dark { background: var(--ink-900); color: var(--cream-50); border-color: var(--ink-900); }
+  .scale-card.dark .sc-cap { color: rgba(244,239,224,0.6); }
+
+  /* email mock */
+  .sc-email { grid-column: span 5; grid-row: span 2; padding: 0; }
+  .sc-email .em-bar {
+    height: 32px;
+    border-bottom: 1px solid var(--ink-900);
+    background: var(--cream-50);
+    display: flex; align-items: center; gap: 14px;
+    padding: 0 18px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-500);
+  }
+  .sc-email .em-body { padding: 24px 28px 56px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .sc-email .em-from {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-500);
+  }
+  .sc-email .em-from strong { font-style: normal; font-weight: 600; color: var(--ink-900); }
+  .sc-email .em-subj {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.0;
+    letter-spacing: -0.005em;
+    margin: 4px 0 4px;
+  }
+  .sc-email .em-subj em { font-style: italic; }
+  .sc-email .em-banner {
+    background: var(--gradient-spirit);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: var(--r-sm);
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 17px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sc-email .em-banner em { font-style: italic; }
+  .sc-email .em-copy {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-700);
+  }
+  .sc-email .em-copy em { font-style: italic; }
+  .sc-email .em-cta {
+    display: inline-flex; align-self: flex-start;
+    padding: 10px 18px;
+    border: 1px solid var(--ink-900);
+    border-radius: 999px;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  /* IG carousel */
+  .sc-ig { grid-column: span 4; grid-row: span 2; padding: 14px; }
+  .sc-ig .ig-stack {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    height: 100%;
+    align-content: center;
+  }
+  .sc-ig .ig-card {
+    aspect-ratio: 0.66 / 1;
+    border: 1px solid var(--ink-900);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+  }
+  .sc-ig .ig-card.a {
+    background: var(--cream-100);
+  }
+  .sc-ig .ig-card.b {
+    background: var(--gradient-spirit);
+    color: #fff;
+  }
+  .sc-ig .ig-card.c {
+    background: var(--ink-900);
+    color: var(--cream-50);
+  }
+  .sc-ig .ig-card .num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 12px;
+    opacity: 0.6;
+  }
+  .sc-ig .ig-card h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .sc-ig .ig-card h6 em { font-style: italic; }
+  .sc-ig .ig-card .sig {
+    font-family: var(--font-script);
+    font-size: 16px;
+    margin-top: 4px;
+  }
+
+  /* signage */
+  .sc-sign { grid-column: span 3; grid-row: span 2; padding: 22px 24px 50px; }
+  .sc-sign .sg-board {
+    flex: 1;
+    background: var(--ink-900);
+    color: var(--cream-50);
+    border-radius: 6px;
+    padding: 22px 20px 24px;
+    display: flex; flex-direction: column;
+    gap: 8px;
+    position: relative; overflow: hidden;
+  }
+  .sc-sign .sg-board::before {
+    content: "";
+    position: absolute;
+    inset: 60% -10% 18% -10%;
+    background: var(--gradient-spirit);
+    transform: skew(-3deg);
+    opacity: 0.85;
+  }
+  .sc-sign .sg-eyebrow {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 12px;
+    color: rgba(244,239,224,0.6);
+    position: relative; z-index: 2;
+  }
+  .sc-sign .sg-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+    margin: 0;
+    position: relative; z-index: 2;
+    text-wrap: balance;
+  }
+  .sc-sign .sg-title em { font-style: italic; }
+  .sc-sign .sg-foot {
+    margin-top: auto;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(244,239,224,0.78);
+    position: relative; z-index: 2;
+  }
+
+  /* table tent */
+  .sc-tent { grid-column: span 4; padding: 18px 22px 42px; }
+  .sc-tent .tt-paper {
+    flex: 1;
+    background: var(--cream-50);
+    border: 1px dashed rgba(20,17,12,0.4);
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 12px;
+    position: relative;
+  }
+  .sc-tent .tt-paper::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 6px; bottom: 6px;
+    width: 1px;
+    background: rgba(20,17,12,0.25);
+  }
+  .sc-tent .tt-side {
+    display: flex; flex-direction: column; gap: 4px; padding: 4px 8px;
+  }
+  .sc-tent .tt-side h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1;
+    margin: 0;
+  }
+  .sc-tent .tt-side .tt-eyebrow {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ink-500);
+  }
+  .sc-tent .tt-side .tt-list {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-700);
+    margin-top: 4px;
+  }
+  .sc-tent .tt-side .tt-list em {
+    font-style: italic;
+    color: var(--sun-pink);
+  }
+
+  /* stickers */
+  .sc-stickers { grid-column: span 4; padding: 14px 18px 42px; }
+  .sc-stickers .stick-row {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+    padding-top: 4px;
+  }
+  .stick {
+    width: 100%; aspect-ratio: 1 / 1;
+    max-width: 110px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.05;
+    border: 1.5px dashed rgba(20,17,12,0.55);
+    padding: 10px;
+    transform: rotate(-4deg);
+  }
+  .stick.b { background: var(--gradient-spirit); color: #fff; border-color: transparent; transform: rotate(3deg); }
+  .stick.c {
+    background: var(--ink-900); color: var(--cream-50); border-color: transparent;
+    font-family: var(--font-script); font-weight: 500; font-size: 22px;
+    transform: rotate(-7deg);
+  }
+
+  /* postcard */
+  .sc-postcard { grid-column: span 4; padding: 0; overflow: hidden; }
+  .sc-postcard .pc-wrap {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+  }
+  .sc-postcard .pc-front {
+    background: var(--ink-900);
+    color: var(--cream-50);
+    padding: 18px 18px 32px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .sc-postcard .pc-front::before {
+    content: "";
+    position: absolute;
+    inset: 50% -20% 20% -20%;
+    background: var(--gradient-spirit);
+    transform: skew(-3deg);
+  }
+  .sc-postcard .pc-front .pc-eb {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(244,239,224,0.6);
+    position: relative; z-index: 2;
+  }
+  .sc-postcard .pc-front h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 0.96;
+    letter-spacing: -0.005em;
+    margin: 8px 0 0;
+    position: relative; z-index: 2;
+  }
+  .sc-postcard .pc-front h6 em { font-style: italic; }
+  .sc-postcard .pc-front .pc-day {
+    position: relative; z-index: 2;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+  }
+  .sc-postcard .pc-back {
+    background: var(--cream-100);
+    padding: 16px 18px 32px;
+    display: flex; flex-direction: column; gap: 6px;
+    border-left: 1px solid var(--ink-900);
+    position: relative;
+  }
+  .sc-postcard .pc-back .pc-stamp {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 50px; height: 56px;
+    border: 1px dashed rgba(20,17,12,0.5);
+    display: grid; place-items: center;
+    font-family: var(--font-script);
+    font-size: 22px;
+    color: var(--sun-pink);
+    transform: rotate(4deg);
+  }
+  .sc-postcard .pc-back .pc-lines {
+    font-family: var(--font-script);
+    font-size: 14px;
+    color: var(--ink-700);
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+  .sc-postcard .pc-back .pc-addr {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ink-500);
+    margin-top: auto;
+  }
+
+  /* === Slide 15 — Content Strategy / Blog === */
+  .s-content { background: var(--cream-100); }
+  .content-grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 36px;
+    flex: 1;
+    min-height: 0;
+  }
+  .blog-mock {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    background: var(--cream-50);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    min-height: 0;
+  }
+  .blog-mock .bm-bar {
+    height: 32px;
+    background: var(--cream-100);
+    border-bottom: 1px solid var(--ink-900);
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 12px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-500);
+  }
+  .blog-mock .bm-bar .bd {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(20,17,12,0.18);
+  }
+  .blog-mock .bm-url {
+    margin-left: 12px;
+    color: var(--ink-700);
+  }
+  .blog-mock .bm-body {
+    padding: 22px 26px 26px;
+    flex: 1;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 16px;
+    min-height: 0;
+  }
+  .blog-mock .bm-nav {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(20,17,12,0.2);
+  }
+  .blog-mock .bm-nav .wm-mini {
+    font-family: var(--font-script);
+    font-size: 22px;
+    color: var(--ink-900);
+  }
+  .blog-mock .bm-nav .links {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-500);
+    display: flex; gap: 14px;
+  }
+  .blog-mock .bm-feature {
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+    gap: 22px;
+    align-items: center;
+    min-height: 0;
+  }
+  .blog-mock .bm-feature .bm-eyebrow {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--sun-pink);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .blog-mock .bm-feature h5 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.0;
+    letter-spacing: -0.008em;
+    margin: 0 0 10px;
+  }
+  .blog-mock .bm-feature h5 em { font-style: italic; }
+  .blog-mock .bm-feature .by {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-500);
+  }
+  .blog-mock .bm-feature .lede {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-700);
+    margin-top: 8px;
+    max-width: 38ch;
+  }
+  .blog-mock .bm-feature .feat-art {
+    border-radius: 6px;
+    aspect-ratio: 1 / 1.1;
+    background: var(--ink-900);
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-mock .bm-feature .feat-art::before {
+    content: "";
+    position: absolute;
+    inset: 30% -10% 0 -10%;
+    background: var(--gradient-spirit);
+    transform: skew(-3deg);
+  }
+  .blog-mock .bm-feature .feat-art img {
+    position: absolute;
+    inset: 4% -10% -10% -6%;
+    width: 116%; height: 110%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+  }
+  .blog-mock .bm-strip {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    border-top: 1px solid rgba(20,17,12,0.2);
+    padding-top: 12px;
+  }
+  .blog-mock .bm-strip .bs {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .blog-mock .bm-strip .bs .tag {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--sun-pink);
+    letter-spacing: 0.05em;
+  }
+  .blog-mock .bm-strip .bs .tt {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.15;
+    margin: 0;
+  }
+  .blog-mock .bm-strip .bs .by {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ink-500);
+  }
+
+  .pillars {
+    display: flex; flex-direction: column;
+    gap: 14px; min-height: 0;
+  }
+  .pillars .ph {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-500);
+    margin-bottom: 0;
+  }
+  .pillar-card {
+    border: 1px solid var(--ink-900);
+    border-radius: var(--r-md);
+    padding: 16px 22px;
+    background: var(--cream-50);
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .pillar-card .pc-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-500);
+    border-right: 1px solid rgba(20,17,12,0.2);
+    padding-right: 14px;
+    line-height: 1.3;
+  }
+  .pillar-card .pc-num strong {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    color: var(--ink-900);
+    line-height: 0.95;
+    margin-bottom: 2px;
+  }
+  .pillar-card h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 0 0 4px;
+  }
+  .pillar-card h6 em { font-style: italic; }
+  .pillar-card .pc-body {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-700);
+    margin: 0;
+  }
+  .pillar-card .pc-body em { font-style: italic; color: var(--ink-500); }
+
+  /* === Slide 16 — Summary === */
+  .s-summary { background: var(--ink-900); color: var(--cream-50); }
+  .s-summary .topbar .right,
+  .s-summary .eyebrow { color: rgba(244,239,224,0.65); }
+  .summary-grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    flex: 1;
+    min-height: 0;
+  }
+  .sum-card {
+    border: 1px solid rgba(244,239,224,0.22);
+    border-radius: var(--r-md);
+    padding: 26px 26px 28px;
+    background: rgba(244,239,224,0.04);
+    display: flex; flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .sum-card .sc-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(244,239,224,0.5);
+    letter-spacing: 0.04em;
+  }
+  .sum-card h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 0.96;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .sum-card h6 em {
+    font-style: italic;
+    background: var(--gradient-spirit);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .sum-card .sc-body {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(244,239,224,0.78);
+    margin: 0;
+  }
+  .sum-card .sc-list {
+    margin-top: auto;
+    border-top: 1px solid rgba(244,239,224,0.18);
+    padding-top: 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(244,239,224,0.7);
+  }
+  .sum-card .visual {
+    height: 110px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .sum-card .visual.brand {
+    background: var(--cream-50);
+    color: var(--ink-900);
+    font-family: var(--font-script);
+    font-size: 48px;
+  }
+  .sum-card .visual.site {
+    background: var(--cream-100);
+    color: var(--ink-900);
+    padding: 14px 16px;
+    place-items: stretch;
+  }
+  .sum-card .visual.site .nv {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--ink-900);
+    padding-bottom: 6px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ink-500);
+  }
+  .sum-card .visual.site .nv .wm {
+    font-family: var(--font-script); font-size: 16px; font-style: normal; color: var(--ink-900);
+  }
+  .sum-card .visual.site .ht {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.0;
+    letter-spacing: -0.005em;
+    margin-top: 8px;
+  }
+  .sum-card .visual.site .ht em {
+    font-style: italic;
+    background: var(--gradient-spirit);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .sum-card .visual.content {
+    background: var(--cream-50);
+    color: var(--ink-900);
+    padding: 12px 14px;
+    place-items: stretch;
+  }
+  .sum-card .visual.content .heads {
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .sum-card .visual.content .heads .h {
+    height: 9px; background: rgba(20,17,12,0.85); border-radius: 2px;
+  }
+  .sum-card .visual.content .heads .h.s { width: 80%; }
+  .sum-card .visual.content .heads .h.t { width: 60%; height: 6px; background: rgba(20,17,12,0.4); }
+  .sum-card .visual.content .tagline {
+    margin-top: auto;
+    font-family: var(--font-script);
+    font-size: 18px;
+    color: var(--sun-pink);
+  }
+  .sum-card .visual.collateral {
+    background: var(--cream-50);
+    padding: 8px;
+    place-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .sum-card .visual.collateral .ch {
+    border-radius: 4px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 10px;
+    color: var(--ink-500);
+    padding: 6px;
+    border: 1px solid rgba(20,17,12,0.4);
+    display: flex; align-items: end;
+  }
+  .sum-card .visual.collateral .ch.g {
+    background: var(--gradient-spirit);
+    color: rgba(255,255,255,0.85);
+    border-color: transparent;
+  }
+  .sum-card .visual.collateral .ch.d {
+    background: var(--ink-900);
+    color: rgba(244,239,224,0.7);
+    border-color: transparent;
+  }
+
+  /* helpers */
+  .row-between { display: flex; justify-content: space-between; align-items: baseline; }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 24px;
+  }
+  .topbar .right {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-500);
+  }
+  .slide.dark .topbar .right { color: rgba(244,239,224,0.55); }
+
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ========== 01 Cover ========== -->
+<section class="slide s-cover" data-screen-label="01 Cover">
+  <div class="cover-grid">
+    <div class="cover-left">
+      <div>
+        <div class="cover-mark">holy flirtation</div>
+        <div class="eyebrow" style="margin-top: 56px;">Brand &amp; design system · proposal v.III</div>
+      </div>
+
+      <div>
+        <h1 class="cover-title">A brand <br><em>with a wink.</em></h1>
+        <p class="cover-tag">A visual identity for a Catholic mixer &amp; speed‑dating evening — equal parts reverent, romantic, and ridiculous.</p>
+      </div>
+
+      <div class="cover-foot">
+        <div>
+          For: The Holy Flirtation Society<br>
+          Indianapolis · Spring 2026
+        </div>
+        <div class="vol">III</div>
+      </div>
+    </div>
+
+    <div class="cover-right">
+      <img src="assets/dove-flying-watercolor.jpg" alt="Watercolor dove in flight">
+      <div class="cover-seal">
+        <div>
+          Vol. <strong>III</strong>
+          Ordinary Time
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 02 Contents ========== -->
+<section class="slide" data-screen-label="02 Contents">
+  <div class="topbar">
+    <div class="eyebrow">Contents</div>
+    <div class="right">A short tour of the system</div>
+  </div>
+  <h2 class="h-1" style="max-width: 18ch;">What's <em class="grad-text">inside</em> the missal.</h2>
+
+  <div class="toc-grid">
+    <div>
+      <div class="toc-row">
+        <div class="toc-num">i.</div>
+        <div>
+          <div class="toc-title">The brief</div>
+          <div class="toc-sub">why this exists, who it's for, what it isn't</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">ii.</div>
+        <div>
+          <div class="toc-title">Brand <em>promise</em> &amp; pillars</div>
+          <div class="toc-sub">three pillars · one ungovernable Holy Spirit</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">iii.</div>
+        <div>
+          <div class="toc-title">Voice &amp; tone</div>
+          <div class="toc-sub">how Holy Flirtation talks (and doesn't)</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">iv.</div>
+        <div>
+          <div class="toc-title">Wordmark &amp; logo</div>
+          <div class="toc-sub">a script, a seal, and the rules thereof</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">v.</div>
+        <div>
+          <div class="toc-title">Type system</div>
+          <div class="toc-sub">Crimson Text · Caveat · scale &amp; usage</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">vi.</div>
+        <div>
+          <div class="toc-title">Color &amp; <em>the spirit</em></div>
+          <div class="toc-sub">cream paper, ink, and the sunset gradient</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="toc-row">
+        <div class="toc-num">vii.</div>
+        <div>
+          <div class="toc-title">The patron</div>
+          <div class="toc-sub">our watercolor dove &amp; his many moods</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">viii.</div>
+        <div>
+          <div class="toc-title">Components &amp; <em>in the wild</em></div>
+          <div class="toc-sub">buttons, badges, posters, name tags, IG</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">ix.</div>
+        <div>
+          <div class="toc-title">Flirtation <em>Nation</em></div>
+          <div class="toc-sub">a chapter network — every parish, a volume</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">x.</div>
+        <div>
+          <div class="toc-title">The system at scale</div>
+          <div class="toc-sub">email, social, signage, table tents, stickers</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">xi.</div>
+        <div>
+          <div class="toc-title">Content strategy</div>
+          <div class="toc-sub">testimonials, priests, married couples, JPII</div>
+        </div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">xii.</div>
+        <div>
+          <div class="toc-title">The <em>whole picture</em></div>
+          <div class="toc-sub">brand · website · content · collateral</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>i — xii · 17 slides</span>
+    <span class="wm">holy flirtation</span>
+    <span>02 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 03 The Brief ========== -->
+<section class="slide" data-screen-label="03 The Brief">
+  <div class="topbar">
+    <div class="eyebrow">i. The brief</div>
+    <div class="right">In which we admit the problem</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 16ch;">It is, frankly, <em class="grad-text">rough out there.</em></h2>
+
+  <div class="brief-grid">
+    <div>
+      <p class="lede" style="max-width: 38ch; font-size: 32px;">
+        Catholic singles, ages 22–35, want to meet each other on purpose — without
+        the thumb‑flick, the parish‑coffee ambush, or the third‑party dating app
+        that doesn't quite get it.
+      </p>
+      <p class="lede" style="margin-top: 28px; max-width: 38ch; font-size: 28px; color: var(--ink-500); font-style: italic;">
+        Holy Flirtation is a monthly mixer in Indianapolis. The brand needs to feel
+        like a cocktail party hosted by your favorite reverent‑but‑hilarious aunt.
+      </p>
+    </div>
+
+    <div>
+      <div class="brief-card">
+        <div class="label">The job to be done</div>
+        <p>Make a serious thing feel inviting. Make a sacred thing feel <em>fun</em>.</p>
+        <p style="font-size: 19px; color: var(--ink-500); font-style: italic;">
+          So the wallflower, the convert, the cradle‑Catholic, and the recovering app‑user
+          all show up — and stay through the end of the speed round.
+        </p>
+      </div>
+      <div class="brief-card" style="margin-top: 22px;">
+        <div class="label">What it is not</div>
+        <p style="font-size: 22px;">Not a parish bulletin. Not a dating app. Not pious wallpaper. Not a Hallmark store.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>i — The brief</span>
+    <span class="wm">holy flirtation</span>
+    <span>03 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 04 Promise ========== -->
+<section class="slide s-promise" data-screen-label="04 Promise">
+  <div class="topbar">
+    <div class="eyebrow">ii. Brand promise</div>
+    <div class="right">Three pillars · one Holy Spirit</div>
+  </div>
+
+  <div class="stack">
+    <div>
+      <div class="eyebrow" style="margin-bottom: 28px;">The promise, in seven words</div>
+      <h1 class="h-display" style="font-size: 116px; color: var(--cream-50); line-height: 1.0; white-space: nowrap;">
+        <em class="grad-text">Reverent.</em> Romantic. <em>Ridiculous.</em>
+      </h1>
+    </div>
+
+    <div class="pillar-row">
+      <div class="pillar">
+        <div class="num">i.</div>
+        <h4>Faithful, not <em>fussy.</em></h4>
+        <p>The Catholic stuff is a feature, not a footnote. We talk about saints, encyclicals, and the rosary on the wing — without making the room into a catechism class.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">ii.</div>
+        <h4>Warm, with <em>edge.</em></h4>
+        <p>Cream paper, candlelight palette, hand‑lettered wordmark — set against a punchy sunset gradient that signals: this is a party, and you're invited.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">iii.</div>
+        <h4>Funny, on <em>purpose.</em></h4>
+        <p>Every line of copy earns its place. We write like the friend who does the homily‑voice impression on the drive home — fond, sharp, and impossible to misread as sincere bait.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>ii — Promise</span>
+    <span class="wm">holy flirtation</span>
+    <span>04 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 05 Voice & Tone ========== -->
+<section class="slide" data-screen-label="05 Voice and Tone">
+  <div class="topbar">
+    <div class="eyebrow">iii. Voice &amp; tone</div>
+    <div class="right">"The friend who quotes Chesterton on the drive home"</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 18ch;">We write like a <em class="grad-text">very fond</em> insider.</h2>
+
+  <div class="voice-attrs">
+    <span class="hot">Witty</span>
+    <span class="hot">Reverent</span>
+    <span class="hot">Specific</span>
+    <span>Self‑aware</span>
+    <span>Plain‑spoken</span>
+    <span>Never smug</span>
+    <span>Never coy</span>
+    <span>Never twee</span>
+  </div>
+
+  <div class="voice-grid">
+    <div class="voice-col">
+      <h4>— sounds like us</h4>
+      <div class="voice-do"><strong>yes</strong> "There's no catechism for a meet‑cute."</div>
+      <div class="voice-do"><strong>yes</strong> "Bring your missal &amp; your humor."</div>
+      <div class="voice-do"><strong>yes</strong> "The Holy Spirit, but make Him your wingman."</div>
+      <div class="voice-do"><strong>yes</strong> "Mark your top three on a paper card. We are not your mother."</div>
+    </div>
+    <div class="voice-col">
+      <h4>— does not sound like us</h4>
+      <div class="voice-dont">"Find your soulmate today!"</div>
+      <div class="voice-dont">"The faith‑forward dating experience for serious singles."</div>
+      <div class="voice-dont">"Where Catholic hearts connect 💕"</div>
+      <div class="voice-dont">"Trust the process — it's all in God's hands."</div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>iii — Voice &amp; tone</span>
+    <span class="wm">holy flirtation</span>
+    <span>05 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 06 Wordmark ========== -->
+<section class="slide s-mark" data-screen-label="06 Wordmark">
+  <div class="topbar">
+    <div class="eyebrow">iv. Wordmark</div>
+    <div class="right">Caveat 500 · ink‑900 · the only signature in the room</div>
+  </div>
+
+  <h2 class="h-2" style="max-width: 22ch;">A signature, not a logo. Hand‑written, never <em class="grad-text">posed.</em></h2>
+
+  <div class="mark-grid">
+    <div class="mark-hero">
+      <span class="corner">primary · ink on cream</span>
+      <span class="corner r">— 1.0×</span>
+      <div class="big">holy flirtation</div>
+    </div>
+
+    <div class="mark-side">
+      <div class="mark-tile dark">
+        <div class="label">reverse · cream on ink</div>
+        <div class="mini">holy flirtation</div>
+      </div>
+      <div class="mark-tile grad">
+        <div class="label">accent · the spirit gradient (sparingly)</div>
+        <div class="mini">holy flirtation</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>iv — Wordmark</span>
+    <span class="wm">holy flirtation</span>
+    <span>06 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 07 Type ========== -->
+<section class="slide" data-screen-label="07 Typography">
+  <div class="topbar">
+    <div class="eyebrow">v. Type system</div>
+    <div class="right">Two voices: a serif for the homily, a script for the wink</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 22ch;">Two faces. A <em class="grad-text">serif</em> &amp; <em class="grad-text">a script.</em></h2>
+
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="meta">
+        <span>Primary · workhorse</span>
+        <span>Crimson Text · 400 / 600 / italic</span>
+      </div>
+      <div class="glyph">Aa</div>
+      <div class="name">Crimson Text</div>
+      <p class="specimen">For headlines, body, eyebrows, captions — everything that has to be readable from across a parish hall. Old‑school book feel; contemporary spacing. Italic carries the wink.</p>
+      <div class="scale">
+        <div class="scale-row"><span class="lbl">Display 132</span><span class="ex" style="font-size: 38px;">There's no catechism</span></div>
+        <div class="scale-row"><span class="lbl">H1 84</span><span class="ex" style="font-size: 28px;">Listen, it's <em>rough.</em></span></div>
+        <div class="scale-row"><span class="lbl">Body 19</span><span class="ex" style="font-size: 19px; font-weight: 400;">Bring your missal &amp; your humor.</span></div>
+        <div class="scale-row"><span class="lbl">Eyebrow 16 it.</span><span class="ex" style="font-size: 16px; font-weight: 400; font-style: italic;">— a Tuesday in Indianapolis</span></div>
+      </div>
+    </div>
+
+    <div class="type-card">
+      <div class="meta">
+        <span>Accent · the wink</span>
+        <span>Caveat · 500</span>
+      </div>
+      <div class="glyph script">hf</div>
+      <div class="name script">Caveat</div>
+      <p class="specimen">For the wordmark, name‑tag handwriting, margin notes, and one or two flourishes per page — never body, never UI labels. The script is a guest, not a tenant.</p>
+      <div class="scale">
+        <div class="scale-row" style="border: 0;">
+          <span class="lbl">Wordmark 56</span>
+          <span class="ex" style="font-family: var(--font-script); font-size: 38px; font-weight: 500;">holy flirtation</span>
+        </div>
+        <div class="scale-row" style="border: 0;">
+          <span class="lbl">Note 24</span>
+          <span class="ex" style="font-family: var(--font-script); font-size: 28px; font-weight: 500; color: var(--sun-pink);">— see you Tuesday</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>v — Type system</span>
+    <span class="wm">holy flirtation</span>
+    <span>07 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 08 Color ========== -->
+<section class="slide s-color" data-screen-label="08 Color">
+  <div class="topbar">
+    <div class="eyebrow">vi. Color</div>
+    <div class="right">Cream paper · ink · the sunset (used like incense — sparingly)</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 22ch;">Twelve colors, three <em class="grad-text">jobs.</em></h2>
+
+  <div class="color-grid">
+    <div class="swatch col-cream-50"><div><div class="nm">Cream 50</div><div class="role">page · brightest</div></div><div class="hex">#FBF8EE</div></div>
+    <div class="swatch col-cream-100"><div><div class="nm">Cream 100</div><div class="role">primary background</div></div><div class="hex">#F4EFE0</div></div>
+    <div class="swatch col-cream-200"><div><div class="nm">Cream 200</div><div class="role">card hover · shade</div></div><div class="hex">#ECE5D2</div></div>
+    <div class="swatch col-cream-300"><div><div class="nm">Cream 300</div><div class="role">deep paper</div></div><div class="hex">#E0D7BF</div></div>
+
+    <div class="swatch col-ink-900 dark"><div><div class="nm">Ink 900</div><div class="role">text · borders</div></div><div class="hex">#14110C</div></div>
+    <div class="swatch col-ink-700 dark"><div><div class="nm">Ink 700</div><div class="role">body copy</div></div><div class="hex">#2A2620</div></div>
+    <div class="swatch col-ink-500 dark"><div><div class="nm">Ink 500</div><div class="role">italics · captions</div></div><div class="hex">#5C564A</div></div>
+    <div class="swatch col-ink-400 dark"><div><div class="nm">Ink 400</div><div class="role">muted · disabled</div></div><div class="hex">#847D6E</div></div>
+
+    <div class="swatch col-orange dark"><div><div class="nm">Sun Orange</div><div class="role">gradient stop · 0%</div></div><div class="hex">#FF7A2E</div></div>
+    <div class="swatch col-coral dark"><div><div class="nm">Sun Coral</div><div class="role">gradient stop · 35%</div></div><div class="hex">#FF7F6A</div></div>
+    <div class="swatch col-pink dark"><div><div class="nm">Sun Pink</div><div class="role">accent · the wink</div></div><div class="hex">#FF4F8B</div></div>
+    <div class="swatch col-magenta dark"><div><div class="nm">Sun Magenta</div><div class="role">gradient stop · 100%</div></div><div class="hex">#E04A9E</div></div>
+  </div>
+
+  <div class="slide-meta">
+    <span>vi — Color</span>
+    <span class="wm">holy flirtation</span>
+    <span>08 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 09 Gradient ========== -->
+<section class="slide s-grad" data-screen-label="09 Spirit Gradient">
+  <img class="dove-up" src="assets/dove-flying-watercolor.jpg" alt="">
+  <div class="topbar" style="position: relative; z-index: 2;">
+    <div class="eyebrow" style="color: rgba(20,17,12,0.7);">vi.b · The signature element</div>
+    <div class="right" style="color: rgba(20,17,12,0.55);">linear‑gradient(95deg, four stops)</div>
+  </div>
+
+  <div style="position: relative; z-index: 2; margin-top: 30px;">
+    <h1 class="gtitle">
+      The <em>spirit</em> gradient.
+    </h1>
+    <p class="gtag" style="margin-top: 28px;">
+      A 95° sunset — orange, coral, pink, magenta — used as a banner behind a single phrase,
+      a button background, or a quiet 18% wash on a dark photograph. Never as a body color.
+      Never as wallpaper. The room should still feel like paper.
+    </p>
+
+    <div class="stops">
+      <div class="stop">
+        <div class="nm">Orange</div>
+        <div class="hx">#FF7A2E · 0%</div>
+      </div>
+      <div class="stop">
+        <div class="nm">Coral</div>
+        <div class="hx">#FF7F6A · 35%</div>
+      </div>
+      <div class="stop">
+        <div class="nm">Pink</div>
+        <div class="hx">#FF4F8B · 70%</div>
+      </div>
+      <div class="stop">
+        <div class="nm">Magenta</div>
+        <div class="hx">#E04A9E · 100%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta" style="color: rgba(20,17,12,0.55); position: absolute; z-index: 3;">
+    <span>vi.b — The spirit gradient</span>
+    <span class="wm" style="color: var(--ink-900);">holy flirtation</span>
+    <span>09 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 10 The Patron (the dove) ========== -->
+<section class="slide s-dove" data-screen-label="10 Patron">
+  <div class="topbar">
+    <div class="eyebrow">vii. The patron</div>
+    <div class="right">Watercolor &amp; pencil · loose, never literal · always one beat from a punchline</div>
+  </div>
+
+  <h2 class="h-2" style="max-width: 28ch; font-size: 60px;">Meet our patron. He is, technically, the Holy Spirit — and He has many faces.</h2>
+
+  <div class="dove-grid">
+    <div class="dove-hero">
+      <img src="assets/dove-wink-portrait.png" alt="Watercolor dove with a wink">
+      <div class="label">— "the wink" · primary portrait, hero use only</div>
+    </div>
+
+    <div class="dove-right">
+      <div class="dove-grid-r">
+        <div class="tile">
+          <img src="assets/dove-rosary.png" alt="Dove with a rosary">
+          <div class="cap">— the rosary</div>
+        </div>
+        <div class="tile">
+          <img src="assets/dove-laptop-watercolor.png" alt="Dove peeking at a laptop">
+          <div class="cap">— the lurker</div>
+        </div>
+        <div class="tile">
+          <img src="assets/dove-phone-note.png" alt="Dove with a phone number note">
+          <div class="cap">— the messenger</div>
+        </div>
+        <div class="tile">
+          <img src="assets/dove-flying.png" alt="Dove in flight">
+          <div class="cap">— in flight</div>
+        </div>
+      </div>
+
+      <div class="dove-text">
+        <p style="font-size: 21px; line-height: 1.45; margin: 0 0 10px;">He is rendered loose: pencil and watercolor on warm paper, with a permanent half‑smile and a faint sense that He has heard your last text and is choosing to be polite about it.</p>
+        <p style="font-size: 19px; line-height: 1.45; color: var(--ink-500); font-style: italic; margin: 0;">Used at scale, He's the punctuation — never the headline. One bird per layout, please.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>vii — The patron</span>
+    <span class="wm">holy flirtation</span>
+    <span>10 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 11 Components ========== -->
+<section class="slide" data-screen-label="11 Components">
+  <div class="topbar">
+    <div class="eyebrow">viii. Components</div>
+    <div class="right">Buttons · banners · seals · badges · the marquee</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 22ch;">A small kit, used on <em class="grad-text">repeat.</em></h2>
+
+  <div class="comp-grid">
+    <div class="comp-card comp-buttons">
+      <div class="lab">— buttons · pill, generous, never tiny</div>
+      <div class="row">
+        <a class="btn btn-primary">Reserve a seat <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost">How it works</a>
+        <a class="btn btn-primary btn-sm">RSVP</a>
+        <a class="btn btn-ghost btn-sm">Reserve</a>
+      </div>
+    </div>
+
+    <div class="comp-card comp-banner">
+      <div class="lab">— headline banner · skewed gradient behind one phrase</div>
+      <p class="demo">
+        <span class="banner">There's no</span><br>
+        catechism for<br>
+        <em class="grad-text">a meet‑cute.</em>
+      </p>
+    </div>
+
+    <div class="comp-card comp-tag">
+      <div class="lab">— name tag</div>
+      <div class="tag-nametag">
+        <div class="hello">hello, my name is</div>
+        <div class="name">Clare M.</div>
+        <div class="parish">— St. John the Evangelist</div>
+        <div class="note">favorite saint: Edith Stein, on a good day</div>
+      </div>
+    </div>
+
+    <div class="comp-card comp-card-card">
+      <div class="lab">— vintage seal · top‑right hero anchor</div>
+      <div class="row">
+        <div class="seal">
+          <div>
+            Vol. <strong>III</strong>
+            Ordinary Time
+          </div>
+        </div>
+        <div style="font-family: var(--font-serif); font-style: italic; color: var(--ink-500); font-size: 18px; line-height: 1.45;">
+          Used once per layout, rotated −8°, always with the volume number for the season.
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-card comp-eyebrow">
+      <div class="lab">— small type elements</div>
+      <div class="ex">A Catholic mixer · Indy · ages 22–35</div>
+      <div class="caps">— Indianapolis · Spring 2026 —</div>
+      <div class="marquee-mini">
+        Flirt virtuously <span class="crux">✣</span> Bring your missal &amp; your humor <span class="crux">✣</span> Indy 2026
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>viii — Components</span>
+    <span class="wm">holy flirtation</span>
+    <span>11 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 12 In the wild ========== -->
+<section class="slide s-apps" data-screen-label="12 In the Wild">
+  <div class="topbar">
+    <div class="eyebrow">viii.b · The system in the wild</div>
+    <div class="right">A Tuesday's worth of touchpoints</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 22ch;">From poster to parish hall, in <em class="grad-text">three colors.</em></h2>
+
+  <div class="apps-grid">
+    <div class="app-card app-poster dark">
+      <div class="top">
+        <span>— event poster · A2</span>
+        <span>·  vol. III · feb</span>
+      </div>
+      <img class="dove" src="assets/dove-flying.png" alt="">
+      <h3>The St.<br>Valentine's Eve<br><em>Mixer.</em></h3>
+      <div class="feb">
+        <div class="day">14</div>
+        <div class="meta">
+          <strong>February · Tuesday · 6:30 pm</strong>
+          The Indiana Roof Ballroom<br>
+          downtown Indianapolis · $28
+        </div>
+      </div>
+      <span class="cap">— event poster (A2) · ink + spirit gradient</span>
+    </div>
+
+    <div class="app-card app-ig">
+      <div class="top">
+        <div class="dot"></div>
+        <div>holyflirtation · Indianapolis</div>
+      </div>
+      <h4>We came for the dating.<br>We stayed for the <em>saint trivia.</em></h4>
+      <div class="l">— a post about Tuesday</div>
+      <div class="sig">holy flirtation</div>
+      <span class="cap">— Instagram · 1080 × 1080</span>
+    </div>
+
+    <div class="app-card app-card-stack">
+      <div class="match-card">
+        <div class="h">match card · vol. III</div>
+        <div class="t">My top three:</div>
+        <div class="lines">
+          <div><span class="ln">James T. · St. Joan of Arc</span><div class="lab">— 1.</div></div>
+          <div><span class="ln">Peter R. · Holy Rosary</span><div class="lab">— 2.</div></div>
+          <div><span class="ln">Anna S. · Christ the King</span><div class="lab">— 3.</div></div>
+        </div>
+        <div class="stamp">yes</div>
+      </div>
+      <span class="cap">— paper match card (printed two‑up)</span>
+    </div>
+
+    <div class="app-card app-site">
+      <div class="browser"><div class="b"></div><div class="b"></div><div class="b"></div></div>
+      <div class="body-wrap">
+        <div class="nav">
+          <div class="wm">holy flirtation</div>
+          <div class="l"><span>Why we exist</span><span>The format</span><span>Events</span><span>Voices</span></div>
+          <div style="font-style: italic; color: var(--ink-500);">Indianapolis · 2026</div>
+        </div>
+        <div>
+          <div class="eyebrow" style="font-size: 16px; margin-bottom: 14px;">A Catholic mixer · Indy · ages 22–35</div>
+          <h3><span class="banner" style="font-size: 56px; padding: 0 .1em;">There's no</span><br>catechism for<br><em class="grad-text">a meet‑cute.</em></h3>
+        </div>
+        <div class="right-art">
+          <img src="assets/dove-flying.png" alt="">
+        </div>
+      </div>
+      <span class="cap">— landing page · holyflirtation.co</span>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>viii.b — In the wild</span>
+    <span class="wm">holy flirtation</span>
+    <span>12 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 13 Flirtation Nation ========== -->
+<section class="slide s-nation" data-screen-label="13 Flirtation Nation">
+  <div class="topbar">
+    <div class="eyebrow">ix. Flirtation Nation</div>
+    <div class="right">A chapter network · one volume per parish, per season</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 22ch;">Every parish, <em class="grad-text">a chapter.</em></h2>
+
+  <div class="nation-grid">
+    <div class="nation-map">
+      <div class="map-cap">— the network · spring 2026 forecast</div>
+      <h4 class="map-title">From Indianapolis, to <em>everywhere a parish has a hall.</em></h4>
+      <svg class="usa-svg" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="dotGrad" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#FF7A2E"/>
+            <stop offset="50%" stop-color="#FF4F8B"/>
+            <stop offset="100%" stop-color="#E04A9E"/>
+          </linearGradient>
+        </defs>
+        <path d="M55 130 L120 100 L180 95 L260 80 L340 70 L420 78 L500 90 L555 115 L560 175 L545 220 L505 250 L465 270 L420 285 L370 295 L320 300 L260 295 L200 290 L150 280 L110 260 L80 230 L60 195 Z" fill="none" stroke="#14110C" stroke-width="1.2" opacity="0.9"/>
+        <path d="M120 280 L150 290 L160 305 L185 312 L195 330 L210 335 L210 320 L195 305 L180 295 L165 280 L150 268 Z" fill="none" stroke="#14110C" stroke-width="1.2" opacity="0.7"/>
+        <g font-family="Crimson Text, serif" font-style="italic" font-size="11" fill="#5C564A">
+          <g><circle cx="290" cy="190" r="11" fill="url(#dotGrad)"/><circle cx="290" cy="190" r="5" fill="#14110C"/><text x="305" y="194">Indianapolis · HQ</text></g>
+          <g><circle cx="450" cy="155" r="6" fill="url(#dotGrad)"/><text x="460" y="158">Brooklyn</text></g>
+          <g><circle cx="430" cy="180" r="6" fill="url(#dotGrad)"/><text x="440" y="183">Philadelphia</text></g>
+          <g><circle cx="420" cy="135" r="6" fill="url(#dotGrad)"/><text x="430" y="138">Boston</text></g>
+          <g><circle cx="395" cy="195" r="6" fill="url(#dotGrad)"/><text x="405" y="198">Pittsburgh</text></g>
+          <g><circle cx="345" cy="225" r="6" fill="url(#dotGrad)"/><text x="355" y="228">Charleston</text></g>
+          <g><circle cx="300" cy="265" r="6" fill="url(#dotGrad)"/><text x="310" y="268">New Orleans</text></g>
+          <g><circle cx="240" cy="245" r="6" fill="url(#dotGrad)"/><text x="250" y="248">Austin</text></g>
+          <g><circle cx="180" cy="220" r="6" fill="url(#dotGrad)"/><text x="190" y="223">Phoenix</text></g>
+          <g><circle cx="120" cy="180" r="6" fill="url(#dotGrad)"/><text x="130" y="183">San Francisco</text></g>
+          <g><circle cx="115" cy="135" r="6" fill="url(#dotGrad)"/><text x="125" y="138">Seattle</text></g>
+          <g><circle cx="245" cy="155" r="6" fill="url(#dotGrad)"/><text x="255" y="158">Denver</text></g>
+          <g><circle cx="335" cy="160" r="6" fill="url(#dotGrad)"/><text x="345" y="163">Chicago</text></g>
+        </g>
+      </svg>
+      <div class="map-stats">
+        <div class="stat"><div class="n">12</div><div class="l">chapters · year 1</div></div>
+        <div class="stat"><div class="n">4</div><div class="l">volumes per year</div></div>
+        <div class="stat"><div class="n">~80</div><div class="l">events on the calendar</div></div>
+      </div>
+    </div>
+
+    <div class="nation-side">
+      <div class="chapter-list">
+        <div class="chapter-card hq">
+          <div class="ch-meta"><span>vol. III · Indianapolis</span><span>—  HQ</span></div>
+          <h5 class="ch-city">Indianapolis</h5>
+          <div class="ch-parish">St. John the Evangelist · downtown</div>
+          <div class="ch-hq-tag">— mother house</div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-meta"><span>vol. III · Brooklyn</span><span>— spring '26</span></div>
+          <h5 class="ch-city">Brooklyn</h5>
+          <div class="ch-parish">St. Joseph's · Prospect Heights</div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-meta"><span>vol. III · Austin</span><span>— spring '26</span></div>
+          <h5 class="ch-city">Austin</h5>
+          <div class="ch-parish">St. Mary Cathedral · downtown</div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-meta"><span>vol. III · Boston</span><span>— summer '26</span></div>
+          <h5 class="ch-city">Boston</h5>
+          <div class="ch-parish">St. Cecilia · Back Bay</div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-meta"><span>vol. III · Phoenix</span><span>— summer '26</span></div>
+          <h5 class="ch-city">Phoenix</h5>
+          <div class="ch-parish">Ss. Simon &amp; Jude · Camelback</div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-meta"><span>vol. III · Charleston</span><span>— fall '26</span></div>
+          <h5 class="ch-city">Charleston</h5>
+          <div class="ch-parish">Cathedral of St. John the Baptist</div>
+        </div>
+      </div>
+
+      <div class="nation-kit">
+        <div class="lab">— what each chapter receives in the parish kit</div>
+        <div class="item"><strong>The brand toolkit</strong>Wordmark, type, gradient, dove plates, signage templates, name‑tag stock.</div>
+        <div class="item"><strong>The format playbook</strong>Run‑of‑show, host script, music cues, food &amp; drink list, paper‑card protocol.</div>
+        <div class="item"><strong>The seasonal volume</strong>One new mailer, two posters, two IG sets, three blog features — quarterly, on the dot.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>ix — Flirtation Nation</span>
+    <span class="wm">holy flirtation</span>
+    <span>13 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 14 System at Scale ========== -->
+<section class="slide s-scale" data-screen-label="14 System at Scale">
+  <div class="topbar">
+    <div class="eyebrow">x. The system at scale</div>
+    <div class="right">One kit · every surface · screen, paper, vinyl, foam‑core</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 24ch;">One system. <em class="grad-text">Every surface.</em></h2>
+
+  <div class="scale-grid">
+    <div class="scale-card sc-email">
+      <div class="em-bar">
+        <span>● ● ●</span>
+        <span style="margin-left: auto;">— Inbox · holyflirtation@</span>
+      </div>
+      <div class="em-body">
+        <div class="em-from"><strong>holy flirtation</strong> &lt;hello@holyflirtation.co&gt; · to you</div>
+        <div class="em-subj">Tuesday, the <em>14th.</em> Bring a paper card.</div>
+        <div class="em-banner"><span>vol. III · Ordinary Time</span><em>— Indy ·  6:30 pm</em></div>
+        <div class="em-copy">Friend — we are in fact doing this again, and we are in fact putting your name on a paper card. There's no catechism for a meet‑cute, but there is a <em>sign‑in sheet.</em> Reserve below; bring your missal &amp; your humor.</div>
+        <div class="em-cta">Reserve a seat →</div>
+      </div>
+      <span class="sc-cap">— monthly mailer · Klaviyo / MailerLite template</span>
+    </div>
+
+    <div class="scale-card sc-ig">
+      <div class="ig-stack">
+        <div class="ig-card a">
+          <div class="num">— 01 / 03</div>
+          <div>
+            <h6>There's no catechism for <em>a meet‑cute.</em></h6>
+          </div>
+          <div class="sig" style="font-family: var(--font-script); font-size: 16px;">— hf</div>
+        </div>
+        <div class="ig-card b">
+          <div class="num">— 02 / 03</div>
+          <h6>Bring your missal <em>&amp; your humor.</em></h6>
+          <div class="sig" style="font-family: var(--font-script); font-size: 16px;">— hf</div>
+        </div>
+        <div class="ig-card c">
+          <div class="num">— 03 / 03</div>
+          <h6>Tuesday <em>the 14th.</em></h6>
+          <div class="sig" style="font-family: var(--font-script); font-size: 16px;">— rsvp</div>
+        </div>
+      </div>
+      <span class="sc-cap">— IG carousel · 1080 × 1350</span>
+    </div>
+
+    <div class="scale-card sc-sign">
+      <div class="sg-board">
+        <div class="sg-eyebrow">— this way ↘</div>
+        <h6 class="sg-title">The Holy<br>Flirtation, <em>upstairs.</em></h6>
+        <div class="sg-foot">— Indiana Roof Ballroom · 6:30</div>
+      </div>
+      <span class="sc-cap">— foam‑core signage · A1 venue wayfinding</span>
+    </div>
+
+    <div class="scale-card sc-tent">
+      <div class="tt-paper">
+        <div class="tt-side">
+          <div class="tt-eyebrow">— at your table</div>
+          <h6>House rules.</h6>
+          <div class="tt-list">
+            <em>i.</em> No phones in the round.<br>
+            <em>ii.</em> Pencils, not pens.<br>
+            <em>iii.</em> You may pray. <br>You may not <em>pray on it</em>.
+          </div>
+        </div>
+        <div class="tt-side">
+          <div class="tt-eyebrow">— if you're stuck</div>
+          <h6>Conversation.</h6>
+          <div class="tt-list">
+            <em>—</em> Patron saint, &amp; why?<br>
+            <em>—</em> Best homily of the year?<br>
+            <em>—</em> Your second‑favorite Pope.
+          </div>
+        </div>
+      </div>
+      <span class="sc-cap">— table tent · 3.5 × 5 in · two‑sided</span>
+    </div>
+
+    <div class="scale-card sc-stickers">
+      <div class="stick-row">
+        <div class="stick">Flirt<br><em style="font-style: italic;">virtuously.</em></div>
+        <div class="stick b">vol.<br>III</div>
+        <div class="stick c">holy<br>flirtation</div>
+      </div>
+      <span class="sc-cap">— vinyl sticker pack · 2.5 in circles</span>
+    </div>
+
+    <div class="scale-card sc-postcard">
+      <div class="pc-wrap">
+        <div class="pc-front">
+          <div class="pc-eb">— save the date</div>
+          <h6>The St. Valentine's Eve <em>Mixer.</em></h6>
+          <div class="pc-day">FEB · 14</div>
+        </div>
+        <div class="pc-back">
+          <div class="pc-stamp">III</div>
+          <div style="font-family: var(--font-serif); font-style: italic; font-size: 11px; color: var(--ink-500);">— vol. III · ord. time</div>
+          <div class="pc-lines">A note &mdash;<br>save Tuesday. Wear<br>something blessed.</div>
+          <div class="pc-addr">— holyflirtation.co · indianapolis · 2026</div>
+        </div>
+      </div>
+      <span class="sc-cap">— save‑the‑date postcard · 4 × 6 in</span>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>x — The system at scale</span>
+    <span class="wm">holy flirtation</span>
+    <span>14 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 15 Content Strategy ========== -->
+<section class="slide s-content" data-screen-label="15 Content Strategy">
+  <div class="topbar">
+    <div class="eyebrow">xi. Content strategy</div>
+    <div class="right">A house organ for Catholic dating · weekly cadence</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 22ch;">A house organ, not <em class="grad-text">a feed.</em></h2>
+
+  <div class="content-grid">
+    <div class="blog-mock">
+      <div class="bm-bar">
+        <div class="bd"></div><div class="bd"></div><div class="bd"></div>
+        <span class="bm-url">— holyflirtation.co/journal</span>
+      </div>
+      <div class="bm-body">
+        <div class="bm-nav">
+          <div class="wm-mini">holy flirtation · the journal</div>
+          <div class="links"><span>Testimonials</span><span>From the priests</span><span>From married couples</span><span>Theology</span><span>Archive</span></div>
+        </div>
+
+        <div class="bm-feature">
+          <div>
+            <div class="bm-eyebrow">— A FEATURE · ON THE BODY</div>
+            <h5>Reading <em>Theology of the Body</em> like it's a love letter.</h5>
+            <div class="by">by Sr. Bernadette Marie, O.P. · 14 min read</div>
+            <p class="lede">John Paul II was, among other things, a phenomenologist with very good taste in nuptial metaphors. A column on what the late Pope can teach a thirty‑year‑old at a parish mixer about <em>the language of the body</em> — without making the room uncomfortable.</p>
+          </div>
+          <div class="feat-art">
+            <img src="assets/dove-soaring.png" alt="">
+          </div>
+        </div>
+
+        <div class="bm-strip">
+          <div class="bs">
+            <span class="tag">— TESTIMONIAL · VOL. II</span>
+            <h6 class="tt">"We met on a Tuesday."</h6>
+            <span class="by">— Clare &amp; James · married April '25</span>
+          </div>
+          <div class="bs">
+            <span class="tag">— FROM THE PRIESTS</span>
+            <h6 class="tt">A meet‑cute is not a sacrament.</h6>
+            <span class="by">— Fr. Tom Reilly · St. John the Evangelist</span>
+          </div>
+          <div class="bs">
+            <span class="tag">— FROM MARRIED COUPLES</span>
+            <h6 class="tt">Year four: still flirting.</h6>
+            <span class="by">— Anna &amp; Patrick Doyle</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="ph">— four pillars · one Tuesday a week</div>
+
+      <div class="pillar-card">
+        <div class="pc-num"><strong>i.</strong>Mondays</div>
+        <div>
+          <h6>Testimonials, <em>but not the cringey kind.</em></h6>
+          <p class="pc-body">Couples who met at a chapter event tell the story plainly — what they wore, what they ate, who introduced them. <em>No engagement‑announcement Reels.</em></p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pc-num"><strong>ii.</strong>Wednesdays</div>
+        <div>
+          <h6>From the <em>priests.</em></h6>
+          <p class="pc-body">Short editorials by parish priests — on courtship, chastity, intentionality, and the difference between a meet‑cute and a sacrament. <em>One per month, max.</em></p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pc-num"><strong>iii.</strong>Fridays</div>
+        <div>
+          <h6>From the <em>married couples.</em></h6>
+          <p class="pc-body">Tips from people 4–40 years in: how to ask, how to break up like a Christian, how to tell your mother. <em>Funny, specific, never advice‑columny.</em></p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pc-num"><strong>iv.</strong>Sundays</div>
+        <div>
+          <h6>Theology <em>of the body</em>, in plain English.</h6>
+          <p class="pc-body">A serial reading of John Paul II's Wednesday audiences — one per week, written for the room, not the seminary. <em>The thought‑leadership engine.</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta">
+    <span>xi — Content strategy</span>
+    <span class="wm">holy flirtation</span>
+    <span>15 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 16 Summary ========== -->
+<section class="slide s-summary" data-screen-label="16 Summary">
+  <div class="topbar">
+    <div class="eyebrow">xii. The whole picture</div>
+    <div class="right">— the rebrand, all four pieces, on one page</div>
+  </div>
+
+  <h2 class="h-1" style="max-width: 24ch; color: var(--cream-50);">One brand, <em class="grad-text">four levers.</em></h2>
+
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sc-num">— I. THE BRAND</div>
+      <div class="visual brand">holy flirtation</div>
+      <h6>A signature, <em>not a logo.</em></h6>
+      <p class="sc-body">Cream paper · ink‑900 · the sunset gradient used like incense. A serif for the homily, a script for the wink, one watercolor patron, one paper card.</p>
+      <div class="sc-list">
+        <span>— wordmark · Caveat 500</span>
+        <span>— Crimson Text · 4‑step scale</span>
+        <span>— 12 colors · 1 gradient</span>
+      </div>
+    </div>
+
+    <div class="sum-card">
+      <div class="sc-num">— II. THE WEBSITE</div>
+      <div class="visual site">
+        <div class="nv">
+          <span class="wm">holy flirtation</span>
+          <span>— Indy '26</span>
+        </div>
+        <div class="ht">There's no catechism for <em>a meet‑cute.</em></div>
+      </div>
+      <h6>holyflirtation<em>.co</em></h6>
+      <p class="sc-body">Six pages: the format, the calendar, the journal, the chapters, &amp; a quietly excellent RSVP. No drop‑downs. No popups. <em>One newsletter, sent on Tuesdays.</em></p>
+      <div class="sc-list">
+        <span>— landing · format · journal</span>
+        <span>— chapters · RSVP · about</span>
+        <span>— Tuesday letter · weekly</span>
+      </div>
+    </div>
+
+    <div class="sum-card">
+      <div class="sc-num">— III. THE CONTENT</div>
+      <div class="visual content">
+        <div class="heads">
+          <div class="h s"></div>
+          <div class="h"></div>
+          <div class="h t"></div>
+          <div class="h s"></div>
+          <div class="h t"></div>
+        </div>
+        <div class="tagline">— the journal</div>
+      </div>
+      <h6>A house organ for <em>Catholic dating.</em></h6>
+      <p class="sc-body">Four columns, one per Sunday: testimonials, parish priests, married couples, and Theology of the Body in plain English. <em>The thought‑leadership engine.</em></p>
+      <div class="sc-list">
+        <span>— Mon · testimonials</span>
+        <span>— Wed · from the priests</span>
+        <span>— Sun · TOB, in English</span>
+      </div>
+    </div>
+
+    <div class="sum-card">
+      <div class="sc-num">— IV. THE COLLATERAL</div>
+      <div class="visual collateral">
+        <div class="ch">— poster</div>
+        <div class="ch g">— sticker</div>
+        <div class="ch d">— signage</div>
+        <div class="ch">— card</div>
+      </div>
+      <h6>Every <em>parish</em> a chapter.</h6>
+      <p class="sc-body">A licensed kit any Catholic parish can run: posters, table tents, signage, name tags, paper cards, vinyl stickers, and the mailer. <em>12 cities by the end of year one.</em></p>
+      <div class="sc-list">
+        <span>— Indianapolis HQ · vol. III</span>
+        <span>— 11 chapters · spring–fall '26</span>
+        <span>— 4 volumes per chapter / yr</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-meta" style="color: rgba(244,239,224,0.55);">
+    <span>xii — The whole picture</span>
+    <span class="wm" style="color: var(--cream-50);">holy flirtation</span>
+    <span>16 / 17</span>
+  </div>
+</section>
+
+<!-- ========== 17 Closer ========== -->
+<section class="slide s-closer" data-screen-label="17 Closer">
+  <img class="float l" src="assets/dove-shrug.png" alt="">
+  <img class="float r" src="assets/dove-peek.png" alt="">
+
+  <div class="closer-stack">
+    <div class="eyebrow">— and now, the rallying cry —</div>
+    <h1>
+      Let's <em>take back</em><br>date night.
+    </h1>
+    <p>One brand. One paper card. One slim, cheerful chance the next person<br>across from you remembers Tuesday, the 14th, forever.</p>
+    <div style="display: flex; gap: 14px; align-items: center; margin-top: 14px;">
+      <a class="btn btn-primary" style="font-size: 22px; padding: 18px 34px;">Approve direction <span aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" style="font-size: 22px; padding: 18px 34px;">Schedule round 2</a>
+    </div>
+    <div class="eyebrow" style="margin-top: 40px; font-size: 18px;">Holy Flirtation Society · Indianapolis · 2026 · Vol. III · Ordinary Time</div>
+  </div>
+
+  <div class="slide-meta" style="position: absolute; bottom: 40px;">
+    <span>— end —</span>
+    <span class="wm">holy flirtation</span>
+    <span>17 / 17</span>
+  </div>
+</section>
+
+</deck-stage>
+
+<div id="tweaks-root"></div>
+
+<script src="deck-stage.js"></script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "gradient": [
+    "#FF7A2E",
+    "#FF7F6A",
+    "#FF4F8B",
+    "#E04A9E"
+  ],
+  "accent": "#FF7A2E",
+  "paper": "#EFE7D2",
+  "doveBlend": "normal",
+  "wordmarkCase": "lower"
+}/*EDITMODE-END*/;
+
+const GRADIENT_PALETTES = [
+  ["#FF7A2E", "#FF7F6A", "#FF4F8B", "#E04A9E"], // sunset (default)
+  ["#F2B05E", "#E8836B", "#C95E8E", "#7C4F9C"], // dusk
+  ["#FFC371", "#FF9A8B", "#E97FA2", "#A06EC2"], // pastel rose
+  ["#3B6EA5", "#7A6CB1", "#C26BA0", "#E6A86B"], // vespers
+];
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    const root = document.documentElement;
+    const [g0, g1, g2, g3] = t.gradient;
+    root.style.setProperty('--gradient-spirit',
+      `linear-gradient(95deg, ${g0} 0%, ${g1} 35%, ${g2} 70%, ${g3} 100%)`);
+    root.style.setProperty('--sun-orange', g0);
+    root.style.setProperty('--sun-coral', g1);
+    root.style.setProperty('--sun-pink', t.accent);
+    root.style.setProperty('--sun-magenta', g3);
+    root.style.setProperty('--cream-100', t.paper);
+    document.querySelectorAll('.dove-hero img, .dove-grid-r .tile img')
+      .forEach(img => { img.style.mixBlendMode = t.doveBlend; });
+    // wordmark case toggle
+    document.querySelectorAll('.cover-mark, .wm, .nav .wm, .app-ig .sig, .mark-hero .big, .mark-tile .mini')
+      .forEach(el => { el.style.textTransform = t.wordmarkCase === 'upper' ? 'uppercase' : 'none'; });
+  }, [t]);
+
+  return (
+    <TweaksPanel title="Tweaks">
+      <TweakSection label="Spirit gradient" />
+      <TweakColor
+        label="Palette"
+        value={t.gradient}
+        options={GRADIENT_PALETTES}
+        onChange={(v) => setTweak('gradient', v)}
+      />
+      <TweakColor
+        label="Accent (the wink)"
+        value={t.accent}
+        options={['#FF4F8B', '#FF7A2E', '#E04A9E', '#7C4F9C']}
+        onChange={(v) => setTweak('accent', v)}
+      />
+      <TweakSection label="Paper & ink" />
+      <TweakColor
+        label="Paper tone"
+        value={t.paper}
+        options={['#F4EFE0', '#EFE7D2', '#F1ECE2', '#EDE6D9']}
+        onChange={(v) => setTweak('paper', v)}
+      />
+      <TweakRadio
+        label="Dove blend"
+        value={t.doveBlend}
+        options={['multiply', 'normal']}
+        onChange={(v) => setTweak('doveBlend', v)}
+      />
+      <TweakRadio
+        label="Wordmark case"
+        value={t.wordmarkCase}
+        options={['lower', 'upper']}
+        onChange={(v) => setTweak('wordmarkCase', v)}
+      />
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App />);
+</script>
+
+</body>
+</html>
